@@ -86,6 +86,6 @@ You will now see the client receive a real-time alert whenever `Machine-2` gener
 
 ---
 
-## 👥 Authors
+## 👥 Author
 
-* **Rawal Yash Pratulbhai**
+* **Rawal Yash **
