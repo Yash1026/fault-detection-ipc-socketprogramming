@@ -52,3 +52,51 @@ gcc alert_server.c -o alert_server -lpthread
 
 # Compile the engineer client
 gcc client.c -o client
+```
+
+### Running the System
+
+Open multiple terminal windows and run the components in the following order, as outlined in the project's demo script:
+
+1.  **Start the Alert Server** 📡: This process will run in the background, waiting for connections from the supervisor and clients.
+    ```bash
+    ./alert_server
+    ```
+
+2.  **Start the Supervisor** 🕵️: This will begin listening for data from the machine processes.
+    ```bash
+    ./supervisor
+    ```
+
+3.  **Start one or more Machines** ⚙️: Each machine needs a unique ID, the metric it reports, a value range, and an update interval. To trigger a fault, set the min/max range to cross the threshold defined in `faultsys.conf` (e.g., 75-85 to trip an 80-degree threshold).
+    ```bash
+    # This machine will operate normally
+    ./machine Machine-1 temp 20 60 2000
+
+    # This machine is configured to trip the 80-degree threshold
+    ./machine Machine-2 temp 75 85 1500
+    ```
+
+4.  **Start the Engineer Client** 🧑‍💻: This client will connect to the server and display any alerts that are broadcast.
+    ```bash
+    ./client
+    ```
+
+You will now see the client receive a real-time alert whenever `Machine-2` generates a temperature reading that exceeds its configured threshold.
+
+---
+## 📂 Codebase Structure
+
+* `machine.c`: Simulates a factory machine, generates random metric data, and sends it to an IPC message queue.
+* `supervisor.c`: Reads data from the message queue, checks for threshold violations based on `faultsys.conf`, and sends alerts to the server.
+* `alert_server.c`: A multi-threaded TCP server that listens for alerts from the supervisor and broadcasts them to all connected clients.
+* `client.c`: A simple TCP client that connects to the server and prints any received alert messages.
+* `common.h`: A header file containing shared data structures (like `ipc_msg` and `alert`), constants, and includes for all components.
+* `faultsys.conf`: The configuration file for defining fault thresholds for different machines and metrics.
+
+---
+
+## 👥 Authors
+
+* **Rawal Yash Pratulbhai**
+* **Rahish Ajgaonkar**
