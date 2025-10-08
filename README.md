@@ -41,17 +41,8 @@ You need a Linux environment (like Ubuntu) with the GCC compiler installed.
 Compile the four main components using the following commands:
 
 ```bash
-# Compile the machine simulator
-gcc machine.c -o machine
-
-# Compile the supervisor
-gcc supervisor.c -o supervisor -lpthread
-
-# Compile the alert server
-gcc alert_server.c -o alert_server -lpthread
-
-# Compile the engineer client
-gcc client.c -o client
+# Compile all the simulators(machine, alert server, client and supervisor)
+make
 ```
 
 ### Running the System
@@ -62,24 +53,24 @@ Open multiple terminal windows and run the components in the following order, as
     ```bash
     ./alert_server
     ```
+    
+2.  **Start the Engineer Client** 🧑‍💻: This client will connect to the server and display any alerts that are broadcast.
+    ```bash
+    ./client
+    ```
 
-2.  **Start the Supervisor** 🕵️: This will begin listening for data from the machine processes.
+3.  **Start the Supervisor** 🕵️: This will begin listening for data from the machine processes.
     ```bash
     ./supervisor
     ```
 
-3.  **Start one or more Machines** ⚙️: Each machine needs a unique ID, the metric it reports, a value range, and an update interval. To trigger a fault, set the min/max range to cross the threshold defined in `faultsys.conf` (e.g., 75-85 to trip an 80-degree threshold).
+4.  **Start one or more Machines** ⚙️: Each machine needs a unique ID, the metric it reports, a value range, and an update interval. To trigger a fault, set the min/max range to cross the threshold defined in `faultsys.conf` (e.g., 75-85 to trip an 80-degree threshold).
     ```bash
     # This machine will operate normally
     ./machine Machine-1 temp 20 60 2000
 
     # This machine is configured to trip the 80-degree threshold
     ./machine Machine-2 temp 75 85 1500
-    ```
-
-4.  **Start the Engineer Client** 🧑‍💻: This client will connect to the server and display any alerts that are broadcast.
-    ```bash
-    ./client
     ```
 
 You will now see the client receive a real-time alert whenever `Machine-2` generates a temperature reading that exceeds its configured threshold.
