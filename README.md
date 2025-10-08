@@ -8,8 +8,7 @@ The core goal is to build a realistic system that monitors multiple machines, de
 
 The system is composed of four main components that work together to collect data, detect faults, and distribute alerts.
 
-![System Architecture Diagram](https://i.imgur.com/your-architecture-diagram.png)
-*(Note: You can replace the link above with a screenshot of your architecture diagram from the presentation)*
+![System Architecture Diagram]([https://i.imgur.com/your-architecture-diagram.png](https://drive.google.com/file/d/1Cyc__KNJzCzxBC98UIjJJiAq-wODZs4M/view?usp=sharing))
 
 1.  **Machine (`machine.c`)**: Each machine in the factory is simulated as a separate OS process. It continuously generates sensor readings (like temperature and load) and sends them to the Supervisor via a System V Message Queue.
 
